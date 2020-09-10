@@ -127,8 +127,6 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
               out.write(PrinterCommand.POS_Set_PrtAndFeedPaper(feed));
             }
           }
-
-          out.flush();
           bSocket.close();
           callback.invoke(null, "Success");
         } catch (Exception e) {
