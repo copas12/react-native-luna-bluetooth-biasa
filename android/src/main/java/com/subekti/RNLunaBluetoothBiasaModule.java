@@ -48,9 +48,6 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
     final String printerMac = address;
     final Callback callback = cb;
     final ReadableArray pCommands = commands;
-
-    Runnable runnable = new Runnable() {
-      public void run() {
         try {
           BluetoothAdapter blueTooth = BluetoothAdapter.getDefaultAdapter();
           blueTooth.cancelDiscovery();
@@ -127,14 +124,10 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
               out.write(PrinterCommand.POS_Set_PrtAndFeedPaper(feed));
             }
           }
-          
           callback.invoke(null, "Success");
         } catch (Exception e) {
           callback.invoke(e.toString(), null);
         }
-      }
-    };
-    executorService.execute(runnable);
   }
   
 }
