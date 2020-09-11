@@ -44,9 +44,8 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void Print(String address, ReadableArray commands, Callback cb) {
+  public void Print(String address, ReadableArray commands, Promise promise) {
     final String printerMac = address;
-    final Callback callback = cb;
     final ReadableArray pCommands = commands;
         try {
           BluetoothAdapter blueTooth = BluetoothAdapter.getDefaultAdapter();
@@ -124,9 +123,9 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
               out.write(PrinterCommand.POS_Set_PrtAndFeedPaper(feed));
             }
           }
-          callback.invoke(null, "Success");
+          promise.resolve("success");
         } catch (Exception e) {
-          callback.invoke(e.toString(), null);
+          promise.reject(e.toString());
         }
   }
   
