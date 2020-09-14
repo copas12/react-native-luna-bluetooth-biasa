@@ -63,7 +63,10 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
             
           DataOutputStream out = new DataOutputStream(bSocket.getOutputStream());
 
-          for (int i = 0; i < pCommands.size(); i++) {
+          int i = 0;
+          int length = pCommands.size();
+
+          while (i < length) {
             ReadableMap command = pCommands.getMap(i);
             if (command.hasKey("printText")) {
               // Print TEXT
@@ -122,7 +125,9 @@ public class RNLunaBluetoothBiasaModule extends ReactContextBaseJavaModule {
               int feed = command.getInt("feed");
               out.write(PrinterCommand.POS_Set_PrtAndFeedPaper(feed));
             }
+            i++;
           }
+          Thread.sleep(200);
           promise.resolve("success");
         } catch (Exception e) {
           promise.reject(e.toString());
